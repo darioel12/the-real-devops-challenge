@@ -31,5 +31,4 @@ jobs:
     - name: Push docker image
       run: |
         docker push ${{ secrets.DOCKER_USERNAME }}/mongo_api:${TAG}
-        docker push ${{ secrets.DOCKER_USERNAME }}/mongo_api:latest
       
