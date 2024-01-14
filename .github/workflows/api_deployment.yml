@@ -18,7 +18,7 @@ jobs:
     - name: Connect to docker
       run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
     - name: Build the Docker image
-      run: | 
+      run: |
         docker build . --file Dockerfile --tag mongo-api:$(date +%s)
-        docker push mongo-api
+        docker push ${{ secrets.DOCKER_USERNAME }}/mongo-api:$(date +%s)
       
