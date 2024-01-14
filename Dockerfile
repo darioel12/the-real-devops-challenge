@@ -7,6 +7,7 @@ WORKDIR /app
 # Copia las carpetas app y tests al contenedor
 COPY src /app/src
 COPY tests /app/tests
+COPY requirements.txt /app/
 
 # Instala las dependencias definidas en requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
