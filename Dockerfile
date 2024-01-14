@@ -11,15 +11,16 @@ ENV MONGO_URL=$MONGO_URL
 RUN apt-get update && \
     apt-get install -y python3-venv
 
-
-# Instala las dependencias definidas en requirements.txt
+# Ejecutar el venv
 RUN python3 -m venv venv && \
-    . venv/bin/activate && \
-    pip install --no-cache-dir -r requirements.txt
+    . venv/bin/activate
 
 # Copia las carpetas app y tests al contenedor
 COPY src /app
 COPY requirements.txt /app
+
+# Instalar las dependecias necesarias
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Exponer los puertos necesarios
 EXPOSE 8000
