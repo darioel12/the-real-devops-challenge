@@ -20,5 +20,5 @@ jobs:
     - name: Build the Docker image
       run: |
         docker build . --file Dockerfile --tag mongo-api:$(date +%s)
-        docker push ${{ secrets.DOCKER_USERNAME }}/mongo-api:$(date +%s)
+        docker push ${{ secrets.DOCKER_USERNAME }}/mongo-api
       
