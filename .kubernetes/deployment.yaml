@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo_api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo_api
+  template:
+    metadata:
+      labels:
+        app: mongo_api
+    spec:
+      containers:
+      - name: mongo_api
+        image: darioel12/mongo_api:latest
+        ports:
+        - containerPort: 8000
