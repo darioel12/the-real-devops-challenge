@@ -18,4 +18,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 8000
 
 # Comando para ejecutar la aplicación y las pruebas
-CMD ["sh", "-c", "uvicorn app_v2 app --reload"]
+CMD ["sh", "-c", "uvicorn app_v2:app --reload"]
