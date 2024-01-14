@@ -7,7 +7,7 @@ from pymongo import MongoClient
 app = FastAPI()
 
 # Configuración de MongoDB
-client = MongoClient("mongodb+srv://darioel12:4pr3ndi3nd0-M0ng0DB@dgb0.a9dusoj.mongodb.net/?retryWrites=true&w=majority")
+client = MongoClient(environ.get("MONGO_URL"))
 db = client["prueba_intelligz"]
 collection = db["restaurants"]
 
