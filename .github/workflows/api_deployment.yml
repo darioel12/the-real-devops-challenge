@@ -19,7 +19,7 @@ jobs:
       run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
     - name: Build the Docker image
       run: |
-        TAG = "${{ steps.get_build_number.outputs.BUILD_NUMBER }}"
+        echo "TAG=${{ github.run_number }}" >> $GITHUB_ENV
         docker build -t ${{ secrets.DOCKER_USERNAME }}/mongo_api:${TAG} -f ./Dockerfile
     - name: Push docker image
       run: |
