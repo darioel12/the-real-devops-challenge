@@ -9,16 +9,22 @@ RUN adduser -D automation && \
 
 # Establece el usuario no root como el usuario por defecto
 USER automation
-
-# Establece el directorio de trabajo en /app
 WORKDIR /app
-
-ARG MONGO_URL
-ENV MONGO_URL=$MONGO_URL
 
 # Configura el directorio de caché temporal de APK
 ENV APK_CACHE_DIR /home/automation/apk-cache
-RUN apk update --cache-dir $APK_CACHE_DIR
+
+# Cambia al usuario root temporalmente para realizar la actualización de apk
+USER root
+RUN mkdir -p $APK_CACHE_DIR && \
+    chown -R automation $APK_CACHE_DIR && \
+    apk update --cache-dir $APK_CACHE_DIR
+
+# Cambia de nuevo al usuario no root
+USER automation
+
+ARG MONGO_URL
+ENV MONGO_URL=$MONGO_URL
 
 # Instala herramientas necesarias para venv
 RUN apk add --no-cache python3-dev py3-pip build-base && \
