@@ -2,7 +2,7 @@
 FROM python:3.8
 
 # Crea un usuario no root
-RUN adduser -D automation
+RUN adduser automation
 
 # Establece el usuario no root como el usuario por defecto
 USER automation
