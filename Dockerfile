@@ -4,7 +4,8 @@ FROM python:3.8-alpine
 # Crea un usuario no root
 RUN adduser -D automation && \
     mkdir /app && \
-    chown -R automation /app
+    mkdir /home/automation/apk-cache && \
+    chown -R automation /app /home/automation/apk-cache
 
 # Establece el usuario no root como el usuario por defecto
 USER automation
@@ -17,8 +18,7 @@ ENV MONGO_URL=$MONGO_URL
 
 # Configura el directorio de caché temporal de APK
 ENV APK_CACHE_DIR /home/automation/apk-cache
-RUN mkdir -p $APK_CACHE_DIR && \
-    apk update --cache-dir $APK_CACHE_DIR
+RUN apk update --cache-dir $APK_CACHE_DIR
 
 # Instala herramientas necesarias para venv
 RUN apk add --no-cache python3-dev py3-pip build-base && \
