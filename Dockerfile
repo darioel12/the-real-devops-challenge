@@ -16,7 +16,9 @@ ARG MONGO_URL
 ENV MONGO_URL=$MONGO_URL
 
 # Instala herramientas necesarias para venv
-RUN apk update && \
+RUN mkdir -p /run/apk && \
+    chmod 777 /run/apk && \
+    apk update && \
     apk add --no-cache python3-dev py3-pip build-base
 
 # Ejecutar el venv
