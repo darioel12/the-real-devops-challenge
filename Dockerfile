@@ -2,7 +2,9 @@
 FROM python:3.8-alpine
 
 # Crea un usuario no root
-RUN adduser -D automation
+RUN adduser -D automation && \
+    mkdir /app && \
+    chown -R automation /app
 
 # Establece el usuario no root como el usuario por defecto
 USER automation
