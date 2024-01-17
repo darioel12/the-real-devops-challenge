@@ -18,11 +18,9 @@ ENV APK_CACHE_DIR /home/automation/apk-cache
 USER root
 RUN mkdir -p $APK_CACHE_DIR && \
     chown -R automation $APK_CACHE_DIR && \
-    apk update --cache-dir $APK_CACHE_DIR
-
-# Instala herramientas necesarias para venv
-RUN apk add --no-cache python3-dev py3-pip build-base && \
-    python3 -m venv /venv
+    apk add --no-cache python3-dev py3-pip build-base && \
+    python3 -m venv /venv && \
+    chown -R automation /venv  
 
 # Cambia de nuevo al usuario no root
 USER automation
