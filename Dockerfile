@@ -20,15 +20,15 @@ RUN mkdir -p $APK_CACHE_DIR && \
     chown -R automation $APK_CACHE_DIR && \
     apk update --cache-dir $APK_CACHE_DIR
 
+# Instala herramientas necesarias para venv
+RUN apk add --no-cache python3-dev py3-pip build-base && \
+    python3 -m venv /venv
+
 # Cambia de nuevo al usuario no root
 USER automation
 
 ARG MONGO_URL
 ENV MONGO_URL=$MONGO_URL
-
-# Instala herramientas necesarias para venv
-RUN apk add --no-cache python3-dev py3-pip build-base && \
-    python3 -m venv /venv
 
 # Ejecutar el venv
 RUN . venv/bin/activate
