@@ -30,15 +30,14 @@ USER automation
 ARG MONGO_URL
 ENV MONGO_URL=$MONGO_URL
 
-# Ejecutar el venv
-RUN . venv/bin/activate
-
 # Copia las carpetas app y tests al contenedor
 COPY src /app
 COPY requirements.txt /app
 
-# Instalar las dependecias necesarias
-RUN pip install --no-cache-dir -r requirements.txt
+# Ejecutar el venv
+RUN . venv/bin/activate && \ 
+    pip install --no-cache-dir -r requirements.txt
+
 
 # Exponer los puertos necesarios
 EXPOSE 8000
