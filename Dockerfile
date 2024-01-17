@@ -34,10 +34,8 @@ ENV MONGO_URL=$MONGO_URL
 COPY src /app
 COPY requirements.txt /app
 
-# Ejecutar el venv
-RUN . venv/bin/activate && \ 
-    pip install --no-cache-dir -r requirements.txt
-
+# Ejecutar el venv e instalar requirements
+RUN /venv/bin/python -m pip install --no-cache-dir -r requirements.txt
 
 # Exponer los puertos necesarios
 EXPOSE 8000
