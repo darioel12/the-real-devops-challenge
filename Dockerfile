@@ -1,26 +1,39 @@
 # Usa una imagen base con Python
-FROM python:3.8
+FROM python:3.8-alpine
 
-# Establece el directorio de trabajo en /app
+# Crea un usuario no root
+RUN adduser -D automation && \
+    mkdir /app && \
+    mkdir /home/automation/apk-cache && \
+    chown -R automation /app /home/automation/apk-cache
+
+# Establece el usuario no root como el usuario por defecto
+USER automation
 WORKDIR /app
+
+# Configura el directorio de caché temporal de APK
+ENV APK_CACHE_DIR /home/automation/apk-cache
+
+# Cambia al usuario root temporalmente para realizar la actualización de apk
+USER root
+RUN mkdir -p $APK_CACHE_DIR && \
+    chown -R automation $APK_CACHE_DIR && \
+    apk add --no-cache python3-dev py3-pip build-base && \
+    python3 -m venv /venv && \
+    chown -R automation /venv  
+
+# Cambia de nuevo al usuario no root
+USER automation
 
 ARG MONGO_URL
 ENV MONGO_URL=$MONGO_URL
-
-# Instala herramientas necesarias para venv
-RUN apt-get update && \
-    apt-get install -y python3-venv
-
-# Ejecutar el venv
-RUN python3 -m venv venv && \
-    . venv/bin/activate
 
 # Copia las carpetas app y tests al contenedor
 COPY src /app
 COPY requirements.txt /app
 
-# Instalar las dependecias necesarias
-RUN pip install --no-cache-dir -r requirements.txt
+# Ejecutar el venv e instalar requirements
+RUN /venv/bin/python -m pip install --no-cache-dir -r requirements.txt
 
 # Exponer los puertos necesarios
 EXPOSE 8000
